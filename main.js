@@ -71,14 +71,47 @@ const triangle3 = createTriangularPrism(0xffff00, 1, -1);   // Bottom right
 // Add to scene
 scene.add(triangle1, triangle2, triangle3);
 
+let rotationAxis = 'y'; // Start with rotation around the x-axis
+
+// Add event listener for mouse clicks
+document.addEventListener('click', () => {
+  // Cycle through rotation axes: x -> y -> z -> x
+  if (rotationAxis === 'y') {
+    rotationAxis = 'x';
+  } else if (rotationAxis === 'x') {
+    rotationAxis = 'z';
+  } else {
+    rotationAxis = 'y';
+  }
+});
+
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
 
-  // Rotate each triangle
-  triangle1.rotation.y += 0.01;
-  triangle2.rotation.y += 0.01;
-  triangle3.rotation.y += 0.01;
+  // Rotate each triangle based on the current rotation axis
+  if (rotationAxis === 'x') {
+    triangle1.rotation.x += 0.01;
+    triangle2.rotation.x += 0.01;
+    triangle3.rotation.x += 0.01;
+    triangle1.rotation.y += 0.01;
+    triangle2.rotation.y += 0.01;
+    triangle3.rotation.y += 0.01;
+  } else if (rotationAxis === 'y') {
+    triangle1.rotation.y += 0.01;
+    triangle2.rotation.y += 0.01;
+    triangle3.rotation.y += 0.01;
+  } else if (rotationAxis === 'z') {
+    triangle1.rotation.z += 0.01;
+    triangle2.rotation.z += 0.01;
+    triangle3.rotation.z += 0.01;
+    triangle1.rotation.x += 0.01;
+    triangle2.rotation.x += 0.01;
+    triangle3.rotation.x += 0.01;
+    triangle1.rotation.y += 0.01;
+    triangle2.rotation.y += 0.01;
+    triangle3.rotation.y += 0.01;
+  }
 
   renderer.render(scene, camera);
 }
